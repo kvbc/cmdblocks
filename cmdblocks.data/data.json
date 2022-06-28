@@ -1,11 +1,16 @@
 {
-    "test": {
-        "position": [0, 0, 0],
-        "direction": [0, 0, 1],
-        "commands": [
-            "  say test1",
-            "  say test2",
-            "> say test3"
-        ]
+    "constants": {
+        "test": "123"
+    },
+    "blocksets": {
+        "test": {
+            "position": [0, 0, 0],
+            "direction": [0, 0, 1],
+            "commands": [
+                "  say  test1",
+                "  say  test2",
+                "> say  %test%"
+            ]
+        }
     }
 }
