@@ -1,0 +1,11 @@
+{
+    "test": {
+        "position": [0, 0, 0],
+        "direction": [0, 0, 1],
+        "commands": [
+            "  say test1",
+            "  say test2",
+            "> say test3"
+        ]
+    }
+}
