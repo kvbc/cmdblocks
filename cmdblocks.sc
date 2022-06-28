@@ -10,18 +10,30 @@ dir_from_list(dir) -> (
     return ('INVALID');
 );
 
-for (values(data), 
+for (values(data:'blocksets'), 
     loc = _:'position';
     dir = _:'direction';
     for (_:'commands',
-        cmd = _;
+        cmd = str(_);
         cond = 'false';
         cmdblock = 'chain_command_block';
-        if (_i == 0, cmdblock = 'command_block');
+        always_active = '1b';
+
+        if (_i == 0,
+            cmdblock = 'command_block';
+            always_active = '0b';
+        );
+
         if (replace(cmd, '^(?:\\s*)>(?:\\s*)') != cmd, cond = 'true');
         cmd = replace(cmd, '(^\\s*>?\\s*)|(\\s+$)');
         cmd = replace(cmd, '\\s+', ' ');
-        set(loc, str('%s[facing=%s,conditional=%s]{"Command":"%s"}', cmdblock, dir_from_list(dir), cond, cmd));
+        for (pairs(data:'constants'), 
+            name = _:0;
+            val = _:1;
+            cmd = replace(cmd, '%' + name + '%', str(val));
+        );
+
+        set(loc, str('%s[facing=%s,conditional=%s]{"auto":%s,"Command":"%s"}', cmdblock, dir_from_list(dir), cond, always_active, cmd));
         loc = loc + dir;
     );
 );
